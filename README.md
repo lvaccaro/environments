@@ -1,2 +1,2 @@
 # environments
-My personal script & global environments
+My personal scripts & global environment
