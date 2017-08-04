@@ -31,6 +31,7 @@ showhelp(){
 	echo "\t-u, --url\tUrl of the tweet"
 	echo "\t-s, --search\tSearch by word/hashtag and render the 1st tweet"
 	echo "\t-f, --filter\tFilter on search: default=populars, tweets=lasts, users=users, images=photos, videos=videos, news=news, broadcasts=broadcasts"
+	echo "\t-l, --language\tLanguage of tweet reply (default locale system): en, es, it, ..."
 	echo "\t-h, --help\tThis help information"
 	echo "EXAMPLES:"
 	echo "tweet-dl.sh --url \"https://twitter.com/god/status/885938022\" "
@@ -56,6 +57,10 @@ case $key in
     SEARCH="$2"
     shift # past argument
     ;;
+    -l|--language)
+    LANGUAGE="$2"
+    shift # past argument
+    ;;
     -f|--filter)
     FILTER="$2"
     shift # past argument
@@ -69,7 +74,6 @@ shift # past argument or value
 done
 
 
-
 if [[ -n "$SEARCH" ]]; then
 
 	SEARCH=$(urlencode $SEARCH)
@@ -78,13 +82,19 @@ if [[ -n "$SEARCH" ]]; then
 	else
 		URL="https://twitter.com/search?q=$SEARCH&src=typd&f=$FILTER"
 	fi
-	PAGE=$(curl "$URL" 2> /dev/null)
-	URL=$( echo $PAGE | awk -F'data-permalink-path=| data-conversation-id=' '{print $2}')
+
+	PAGE=""
+	if [[ -n "$LANGUAGE" ]]; then
+		PAGE=$(curl -H "Accept-Language: $LANGUAGE" "$URL" 2> /dev/null)
+	else
+		PAGE=$(curl "$URL" 2> /dev/null)
+	fi
+	URL=$(echo $PAGE | awk -F'data-permalink-path=| data-conversation-id=' '{print $2}')
 	URL=$(echo $URL | sed "s/\"//g")
 	URL="https://twitter.com/$URL"
 fi
 
-PAGE=$(curl $URL 2> /dev/null)
+PAGE=$(curl $HEADERS $URL 2> /dev/null)
 TEXT=$(echo $PAGE | awk -F'<title>|</title>' '{print $2}'  | xargs | recode --force --silent html..ascii )
 TIME=$(echo $PAGE | awk -F'class="tweet-timestamp js-permalink js-nav js-tooltip" title=| data-conversation-id=' '{print $3}' )
 TIME=$(echo $TIME | sed "s/\"//g")
