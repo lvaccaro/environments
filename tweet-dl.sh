@@ -38,6 +38,12 @@ showhelp(){
 	echo "tweet-dl.sh --search \"#bitcoin\" --filter \"tweets\" "
 }
 
+if [ $# == 0 ]
+then
+        showhelp
+        exit
+fi
+
 while [[ $# -gt 1 ]]
 do
 key="$1"
@@ -54,10 +60,6 @@ case $key in
     FILTER="$2"
     shift # past argument
     ;;
-    --default)
-	showhelp
-	exit
-    ;;
     *)
     	showhelp
 	exit
@@ -66,11 +68,6 @@ esac
 shift # past argument or value
 done
 
-if [ $# == 0 ] || [ $# == 1 ]
-then
-	showhelp
-	exit
-fi
 
 
 if [[ -n "$SEARCH" ]]; then
