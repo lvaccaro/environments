@@ -1,0 +1,21 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Luca Vaccaro
+	email = luck87@gmail.com
+	signingkey = FBA046EA74B001C1
+	mail = luck87@gmail.com
+[core]
+	autocrlf = input
+	excludesfile = /Users/luca/.gitignore_global
+[commit]
+	gpgsign = true
+	template = /Users/luca/.stCommitMsg
+[gpg]
+	program = /Users/luca/EternityWall/opentimestamps-client/ots-git-gpg-wrapper.sh
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
