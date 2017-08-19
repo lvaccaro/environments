@@ -1,13 +1,26 @@
-# Bitcoin Core wallet on raspberry
+# Bitcoin Core wallet on Raspberry Pi
 
-Tutorial to install and manage bitcoin with Bitcoin Core wallet on Raspberry pi 2.
-Raspberry hardware has limited computational/memory resources and I use a cheap 16Gb SD card for this project.
+Tutorial to install and manage bitcoin with Bitcoin Core wallet on Raspberry Pi 2.
+
+The main focus is run and manage a secure wallet with some backup procedures. 
+The first choice is based on which kind of bitcoin node run:
+- Full-node: store locally the bitcoin blockchain.
+- Prune-node: use a small amount of memory without store the entire blockchain.
+
+This chooice has a big impact on wallet management:
+- Full-node: enable me to import new wallet and rescan the local blockchain.
+- Prune-node: I need to resync the blockchain. I show some technics that could help to save space and time.
+
+Raspberry Pi 2 hardware has limited computational/memory resources and I use a cheap 16Gb SD card for this project.
 So I don't need a full-node to only manage my wallet. Moreover I don't want to wait the entire block validation process from genesis block.
 
-To install a bitcoin full-node on raspberry, a good tutorial is available at http://www.raspberrypifullnode.com/ . 
-Unfortunately the download package seems to be unavailable, and the bitcoind version is a bit old.
+In this tutorial I describe each steps that I follow to run a bitcoin Prune-node, from an empty SDcard to an ready-to-work bitcoin wallet, and some best-practices.
 
-I make a list of the my steps, from an empty SDcard (tested on 16Gb) to an ready to work bitcoin wallet, and some best-practices.
+A really cool guide is available at http://raspnode.com/diyBitcoin.html . Raspnode guide explains how to install and setup a full-node peer with an external usb memory stick to store the blockchain.
+
+Some extra open discussion about "Pruned wallet" are available at: 
+- https://github.com/bitcoin/bitcoin/issues/8497
+- https://github.com/bitcoin/bitcoin/issues/9409
 
 ### Download RASPBIAN
 1. Download the latest "RASPBIAN STRETCH LITE" version, link : https://www.raspberrypi.org/downloads/raspbian/
@@ -116,8 +129,9 @@ $ sudo make install
 ```
 
 ### Run Bitcoin:
-
-My focus is on wallet feature, so I don't need a full-node or a peer where anyone could connect. 
+The default configuration run a full-node with listen option enabled by default.
+I just explain why I don't want a full node
+My main focus is a secure wallet, so I don't need a full-node or a peer where anyone could connect. 
 So my configuration is a "Pruned node" with some strict resources, the following options: 
 ```
 -listen=0
@@ -128,9 +142,6 @@ So my configuration is a "Pruned node" with some strict resources, the following
 ```
 $ bitcoind -listen=0 -dbcache=100 -prune=2000 -printtoconsole
 ```
-2. Some open "Pruned wallet" discussion at: 
-https://github.com/bitcoin/bitcoin/issues/8497
-https://github.com/bitcoin/bitcoin/issues/9409
 
 
 ### Create wallet and deposit bitcoin
