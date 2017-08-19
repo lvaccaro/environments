@@ -1,7 +1,8 @@
-# Bitcoin wallet on raspberry
+# Bitcoin Core wallet on raspberry
 
-bitcoin daemon in a private environment 
-Bitcoin wallet with my legacy hardware, an raspberry 2.
+Tutorial to install and manage bitcoin with Bitcoin Core wallet on Raspberry pi 2.
+Raspberry hardware has limited computational/memory resources and I use a cheap 16Gb SD card for this project.
+So I don't need a full-node to only manage my wallet. Moreover I don't want to wait the entire block validation process from genesis block.
 
 To install a bitcoin full-node on raspberry, a good tutorial is available at http://www.raspberrypifullnode.com/ . 
 Unfortunately the download package seems to be unavailable, and the bitcoind version is a bit old.
@@ -115,6 +116,7 @@ $ sudo make install
 ```
 
 ### Run Bitcoin:
+
 My focus is on wallet feature, so I don't need a full-node or a peer where anyone could connect. 
 So my configuration is a "Pruned node" with some strict resources, the following options: 
 ```
@@ -133,6 +135,9 @@ https://github.com/bitcoin/bitcoin/issues/9409
 
 ### Create wallet and deposit bitcoin
 
+### Export your wallet file
+
+### Restoring your wallet file
 
 ### Bitcoin Backup
 This is the most critical one. A good tutorial of all best practices is available at : https://en.bitcoin.it/wiki/Backingup_your_wallet.
