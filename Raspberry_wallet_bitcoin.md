@@ -17,9 +17,9 @@ So I don't need a full-node to only manage my wallet. Moreover I don't want to w
 In this tutorial I describe each steps that I follow to run a bitcoin Prune-node, from an empty SDcard to an ready-to-work bitcoin wallet, and some best-practices.
 
 External resourses:
-- A really cool full-node guide to install a Full-node on Raspberry is available at http://raspnode.com/diyBitcoin.html : . Raspnode guide explains how to install and setup a full-node peer with an external usb memory stick to store the blockchain.
+- A really cool full-node guide to install a Full-node on Raspberry: http://raspnode.com/diyBitcoin.html. Raspnode guide explains how to install and setup a full-node peer with an external usb memory stick to store the blockchain.
 - A nice tutorial to run a Bitcoin Prune-node on Raspberry 3 without wallet and gui: https://www.reddit.com/r/Bitcoin/comments/5yubg0/run_a_014_fullnode_on_raspberrypi3_prunedless/
-- A usefull guide to Set up Full Bitcoin Node on Raspberry Pi 3 with Ease, at https://freedomnode.com/blog/51/how-to-set-up-full-bitcoin-node-on-raspberry-pi-3-with-ease#h-start-the-node-automatically
+- A usefull guide to Set up Full Bitcoin Node on Raspberry Pi 3 with Ease: https://freedomnode.com/blog/51/how-to-set-up-full-bitcoin-node-on-raspberry-pi-3-with-ease#h-start-the-node-automatically
 - Some extra open discussion about "Pruned wallet" are available at: 
 - https://github.com/bitcoin/bitcoin/issues/8497
 - https://github.com/bitcoin/bitcoin/issues/9409
@@ -139,11 +139,11 @@ So my configuration is a "Pruned node" with some strict resources, the following
 ```
 - Change the amount of local memory in Mb used for validation process. Increase cache equals more validation speed. Decrease cache is needed for strict resources device.
 ```
--dbcache=100
+-dbcache=256
 ```
 - Prune node: specify the amount of memory in Mb used to store the blockchain (>550Mb)
 ```
--prune=2000
+-prune=2048
 ```
 - not check signatures up to the given block
 ```
@@ -151,15 +151,42 @@ So my configuration is a "Pruned node" with some strict resources, the following
 ```
 - the start command
 ```
-$ bitcoind -listen=0 -dbcache=100 -prune=2000 -printtoconsole
+$ bitcoind -listen=0 -dbcache=256 -prune=2048 -printtoconsole
+```
+- download and validate the blockchain in Raspberry is really slow; a better solution is to migrate the pruned blockchain from your pc and move to raspberry bitcoin folder
+```
+cd ~/.bitcoin
+rm -rf blocks chainstate
+cp <new_blocks> blocks
+cp <new_chainstate> chainstate
 ```
 
-
 ### Create wallet and deposit bitcoin
+Create new Address
+```
+bitcoin-cli getnewaddress
+```
 
 ### Export your wallet file
+- Export wallet file
+```
+bitcoin-cli backupwallet backup.dat
+```
+- Export private key
+```
+bitcoin-cli dumpprivkey <address>
+```
 
 ### Restoring your wallet file
+Rescan is disabled in pruned mode.  So you can only import wallet/key without rescan.
+- Import wallet file
+```
+bitcoin-cli importwallet backup.dat
+```
+- Import private key. 
+```
+bitcoin-cli importprivkey <privkey> "" false
+```
 
 ### Bitcoin Backup
 This is the most critical one. A good tutorial of all best practices is available at : https://en.bitcoin.it/wiki/Backingup_your_wallet.
