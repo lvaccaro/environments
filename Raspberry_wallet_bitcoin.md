@@ -162,9 +162,13 @@ cp <new_chainstate> chainstate
 ```
 
 ### Create wallet and deposit bitcoin
-Create new Address
+- Create new Address
 ```
 bitcoin-cli getnewaddress
+```
+- Encypt wallet
+```
+bitcoin-cli encryptwallet "passphrase"
 ```
 
 ### Export your wallet file
