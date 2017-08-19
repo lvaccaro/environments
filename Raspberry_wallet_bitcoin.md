@@ -16,9 +16,11 @@ So I don't need a full-node to only manage my wallet. Moreover I don't want to w
 
 In this tutorial I describe each steps that I follow to run a bitcoin Prune-node, from an empty SDcard to an ready-to-work bitcoin wallet, and some best-practices.
 
-A really cool guide is available at http://raspnode.com/diyBitcoin.html . Raspnode guide explains how to install and setup a full-node peer with an external usb memory stick to store the blockchain.
-
-Some extra open discussion about "Pruned wallet" are available at: 
+External resourses:
+- A really cool full-node guide to install a Full-node on Raspberry is available at http://raspnode.com/diyBitcoin.html : . Raspnode guide explains how to install and setup a full-node peer with an external usb memory stick to store the blockchain.
+- A nice tutorial to run a Bitcoin Prune-node on Raspberry 3 without wallet and gui: https://www.reddit.com/r/Bitcoin/comments/5yubg0/run_a_014_fullnode_on_raspberrypi3_prunedless/
+- A usefull guide to Set up Full Bitcoin Node on Raspberry Pi 3 with Ease, at https://freedomnode.com/blog/51/how-to-set-up-full-bitcoin-node-on-raspberry-pi-3-with-ease#h-start-the-node-automatically
+- Some extra open discussion about "Pruned wallet" are available at: 
 - https://github.com/bitcoin/bitcoin/issues/8497
 - https://github.com/bitcoin/bitcoin/issues/9409
 
@@ -129,16 +131,25 @@ $ sudo make install
 ```
 
 ### Run Bitcoin:
-The default configuration run a full-node with listen option enabled by default.
-I just explain why I don't want a full node
-My main focus is a secure wallet, so I don't need a full-node or a peer where anyone could connect. 
+The default bitcoin configuration run a full-node with listen option enabled by default.
 So my configuration is a "Pruned node" with some strict resources, the following options: 
+- Blind the node to don't receive connection from outside
 ```
 -listen=0
+```
+- Change the amount of local memory in Mb used for validation process. Increase cache equals more validation speed. Decrease cache is needed for strict resources device.
+```
 -dbcache=100
+```
+- Prune node: specify the amount of memory in Mb used to store the blockchain (>550Mb)
+```
 -prune=2000
 ```
-1. the command is the follow:
+- not check signatures up to the given block
+```
+-assumevalid=<block>
+```
+- the start command
 ```
 $ bitcoind -listen=0 -dbcache=100 -prune=2000 -printtoconsole
 ```
