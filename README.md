@@ -9,3 +9,9 @@ Usage:
 
 ### cowtweet.sh
 Redirect tweet-dl.sh output to cowsay with some formatting.
+
+### kermit-desktop-osx.sh
+Change the desktop background of your osx with an Kermit wallpaper.
+* sh kermit-desktop-osx.sh
+* curl https://raw.githubusercontent.com/lvaccaro/environments/master/kermit-dekstop-osx.sh | sh
+* curl goo.gl/3M4hJ2 | sh
