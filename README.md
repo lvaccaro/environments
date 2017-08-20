@@ -8,7 +8,8 @@ Usage:
 * tweet-dl.sh --search "#bitcoin" --filter "tweets" --language en
 
 ### cowtweet.sh
-Redirect tweet-dl.sh output to cowsay with some formatting.
+Redirect tweet-dl.sh output to cowsay with some formatting. A prerequisite is to have tweet-dl.sh in the same path.
+* sh cowtweet.sh 
 
 ### kermit-desktop-osx.sh
 Change the desktop background of your osx with an Kermit wallpaper.
