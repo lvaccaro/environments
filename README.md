@@ -14,7 +14,7 @@ A prerequisite is to have tweet-dl.sh in the same path.
 * sh cowtweet.sh 
 
 ### kermit-desktop-osx.sh
-Change the desktop background of your osx with an Kermit wallpaper.
+Change the desktop background of your osx with an "Kermit The Frog" friendly wallpaper.
 * sh kermit-desktop-osx.sh
 * curl https://raw.githubusercontent.com/lvaccaro/environments/master/kermit-dekstop-osx.sh | sh
 * curl -L goo.gl/3M4hJ2 | sh
