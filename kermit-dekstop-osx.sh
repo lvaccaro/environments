@@ -47,3 +47,6 @@ tell application "Finder"
 set desktop picture to POSIX file "/tmp/kermit.jpg"
 end tell
 EOD
+
+# Restart Dock to refresh
+killall Dock
