@@ -1,4 +1,4 @@
-# environments
+# Environments
 My personal scripts & global environment
 
 ### tweet-dl.sh
