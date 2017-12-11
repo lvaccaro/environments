@@ -58,9 +58,21 @@ $ ./lightning-cli fundchannel 031a31a755cd79971cc7de5d80f4e1030f9d86dde05b98cca3
 ```
 Check the opening channel and wait 6 confirmations
 ```
-$ ./lightning-cli getpeers   
-{ "peers" : 
-	[ 
-		{ "state" : "CHANNELD_AWAITING_LOCKIN", "netaddr" : 
-			[ "52.166.5.175:9735" ], "peerid" : "031a31a755cd79971cc7de5d80f4e1030f9d86dde05b98cca31ef858f21cf08c82", "connected" : true, "owner" : "lightning_channeld", "channel" : "1254545:153:0", "msatoshi_to_us" : 10000000, "msatoshi_total" : 10000000 } ] }
+$ ./lightning-cli getpeers | jq
+{
+  "peers": [
+    {
+      "state": "CHANNELD_AWAITING_LOCKIN",
+      "netaddr": [
+        "52.166.5.175:9735"
+      ],
+      "peerid": "031a31a755cd79971cc7de5d80f4e1030f9d86dde05b98cca31ef858f21cf08c82",
+      "connected": true,
+      "owner": "lightning_channeld",
+      "channel": "1254545:153:0",
+      "msatoshi_to_us": 10000000,
+      "msatoshi_total": 10000000
+    }
+  ]
+}
 ```
