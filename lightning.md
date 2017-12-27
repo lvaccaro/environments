@@ -11,6 +11,9 @@ $ ./lightning-cli getinfo
 { "id" : "0208157cc09a4521490902f174d03b4120903ddfd4539d7fcffac33630c685e912", "port" : 9735, "address" : 
 	[  ], "version" : "v0.5.2-2016-11-21-1245-g4452e3f3", "blockheight" : 1254544 }
 ```
+
+## Opening a channel on the Bitcoin testnet
+
 Get new address on lightning
 ```
 # Returns an address <address>
@@ -76,4 +79,26 @@ $ ./lightning-cli getpeers | jq
   ]
 }
 ```
+After some times the channel is open
+```
+$ ./lightning-cli getchannels | jq
+{
+  "channels": [
+    {
+      "source": "0300dfd818c9925a98b0ffdbcd1033ea77cbb751e4e10ce0a2e647a83db0611a2a",
+      "destination": "03077182c874298ea07517e4e4d15ebe3c5e1559b87df339ae4abd1789c203f265",
+      "short_id": "1256244:64:0/0",
+      "flags": 0,
+      "active": true,
+      "last_update": 0,
+      "base_fee_millisatoshi": 1,
+      "fee_per_millionth": 10,
+      "delay": 6
+    }
+  ]
+}
+```
+## Receiving and receiving payments
+
+
 
