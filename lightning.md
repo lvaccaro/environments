@@ -126,6 +126,11 @@ Send the payment on Peer 1 to Peer 2
 route=$(./lightning-cli getroute 02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d 10000 1 | jq --raw-output .route -)
 ./lightning-cli sendpay "$route" 6dee059d54f8c8852fcb080f3990220853bdd14a006896516db5509c80d0273c
 ```
+More details of route
+```
+$ echo $route
+[ { "id": "02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d", "channel": "1256481:58:0", "msatoshi": 10000, "delay": 9 } ]
+```
 Error log on Peer 1 lightning server, loop message: "Can't send commit: waiting for revoke_and_ack"
 ```
 ...
