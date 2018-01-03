@@ -6,15 +6,15 @@ Based on [c-lightning](https://github.com/ElementsProject/lightning) repository.
 
 ## Run daemons
 Run bitcoin daemon
-```
+```shell
 $ bitcoind -daemon -testnet -estimate-fee
 ```
 Run lightning daemon
-```
+```shell
 $  ./lightningd/lightningd --network=testnet --log-level=debug
 ```
 Check lightning peer status
-```
+```shell
 $ ./lightning-cli getinfo 
 { "id" : "0208157cc09a4521490902f174d03b4120903ddfd4539d7fcffac33630c685e912", "port" : 9735, "address" : 
 	[  ], "version" : "v0.5.2-2016-11-21-1245-g4452e3f3", "blockheight" : 1254544 }
@@ -34,21 +34,24 @@ Send money to lightning address
 $ bitcoin-cli -testnet sendtoaddress 2NFrZSkMS8xmRQcH1ogoo7bWjN4PqzJdwy4 1  
 61ff70f6b367398eea1737ccf177857d2f058bf8712b808fc454252b3e594d7f
 ```
-Get transaction hex ( prepend option true to see tx info and number of confirms)
+Get transaction hex ( prepend option true to see tx info and number of confirms).
 ```
 # Retrieves the raw transaction <rawtx>
 $ bitcoin-cli -testnet getrawtransaction 61ff70f6b367398eea1737ccf177857d2f058bf8712b808fc454252b3e594d7f true
 020000000262fc9259f61069c39cb3e85a32323c1dd6d659bbe812136f1b4c7399d24ba713000000006b483045022100f761fb45590dfc1cb144f4cd90fa5e2569d1669d3ebe977dd99a44e8cd98a2d5022078597539ba65f7f542e51ec050c59d5136a32a8181d4212afb128de51683831c012103f86aafa3479d2f3425dcf233d2589abfb1ee461927fd78565b74e38b90de2861fefffffff98f9b1ec4ae34c741965247aafa81c134e3789981819581f0faf3d0bf598197000000006b483045022100f751a94506ec5ac8fe4bc057377f61968bd64e48836a5c308fb84c7f5452335f02206549e708854f97c56c9a33072f6283402be7248ed40e8e6be6b68e628c08a6b001210294bf8304f39ff2fc9ef78e9069c85995be9150d7998f3d03503a87fb6bf37603feffffff0200e1f5050000000017a914f801913376264e68579e8b9542e0ba381cbffe208708813600000000001976a9149a5c923de5b044e9b9e53e0a3f9f4b77c703e59988ac1f2c1300
 ```
-
-Add funds to current node
+Check also your transaction on block explorer 
 ```
+https://www.blocktrail.com/tBTC/tx/61ff70f6b367398eea1737ccf177857d2f058bf8712b808fc454252b3e594d7f
+```
+Add funds to current node
+```shell
 # Notifies `lightningd` that there are now funds available:
 $ ./lightning-cli addfunds 020000000262fc9259f61069c39cb3e85a32323c1dd6d659bbe812136f1b4c7399d24ba713000000006b483045022100f761fb45590dfc1cb144f4cd90fa5e2569d1669d3ebe977dd99a44e8cd98a2d5022078597539ba65f7f542e51ec050c59d5136a32a8181d4212afb128de51683831c012103f86aafa3479d2f3425dcf233d2589abfb1ee461927fd78565b74e38b90de2861fefffffff98f9b1ec4ae34c741965247aafa81c134e3789981819581f0faf3d0bf598197000000006b483045022100f751a94506ec5ac8fe4bc057377f61968bd64e48836a5c308fb84c7f5452335f02206549e708854f97c56c9a33072f6283402be7248ed40e8e6be6b68e628c08a6b001210294bf8304f39ff2fc9ef78e9069c85995be9150d7998f3d03503a87fb6bf37603feffffff0200e1f5050000000017a914f801913376264e68579e8b9542e0ba381cbffe208708813600000000001976a9149a5c923de5b044e9b9e53e0a3f9f4b77c703e59988ac1f2c1300
 { "outputs" : 1, "satoshis" : 100000000 }
 ```
 Check funds on current node
-```
+```shell
 $ ./lightning-cli listfunds
 { "outputs" : 
 	[ 
@@ -56,20 +59,20 @@ $ ./lightning-cli listfunds
 ```
 
 Connect to another lightning node
-```
+```shell
 # lightning-cli connect <node_id> <ip> [<port>]
 $ ./lightning-cli connect 02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d 52.166.5.175 9735
 { "id" : "02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d" }
 ```
 
 Open the channel
-```
+```shell
 # lightning-cli fundchannel <node_id> <amount>
 $ ./lightning-cli fundchannel 02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d 10000
 { "tx" : "02000000000101f98f9b1ec4ae34c741965247aafa81c134e3789981819581f0faf3d0bf5981970100000017160014a600071ea318fcf58bb069df20d98a2ec759ccdfffffffff0210270000000000002200207d07a53e071a6abdb04eb389965e76da42527e2fe85a071ec31e66fd532a7d7b3eb9f50500000000160014bf9bec2a2f280f32cc529719a9a3627c7245b56402483045022100a5a1b1fcc85585e276a778d47385147f37506e72aa3e95c5bae534a391d6b47b022021e7131ed61aef4869eb291e5bbbf71f2292305cbdb837a0f43ef7cce62911b7012103859e35c17a1d42e91ffc076ff1294667aa2df8935a2eb412d05b3bf687be5da200000000" }
 ```
 Check the opening channel and wait 6 confirmations
-```
+```shell
 $ ./lightning-cli getpeers | jq
 {
   "peers": [
@@ -89,7 +92,7 @@ $ ./lightning-cli getpeers | jq
 }
 ```
 After 6 confirmations
-```
+```shell
 $ ./lightning-cli getchannels | jq
 {
   "channels": [
@@ -109,25 +112,25 @@ $ ./lightning-cli getchannels | jq
 ```
 ## Build invoice and send payments
 Build invoice on Peer 2
-```
+```shell
 $ ./lightning-cli invoice 10000 label2 description2
 { "rhash" : "6dee059d54f8c8852fcb080f3990220853bdd14a006896516db5509c80d0273c", "expiry_time" : 1514481538, "bolt11" : "lntb100n1pdy2xtjpp5dhhqt825lryg2t7tpq8nnypzppfmm522qp5fv5tdk4gfeqxsyu7qdq5v3jhxcmjd9c8g6t0dceqcqpx5tt0su530qn5czpshrmqhrsaxjkkkdtmyesc5k2nmpq3khpyz48zduxajnx2keakvjyc2ywa875xuy3f7fzsmt3ufke7vfswn8ffeeqppyvzj2" }
 ```
 Retrieve invoice info on Peer 2
-```
+```shell
 $ ./lightning-cli listinvoice
 [ 
  { "label" : "label2", "rhash" : "6dee059d54f8c8852fcb080f3990220853bdd14a006896516db5509c80d0273c", "msatoshi" : 10000, "complete" : false, "expiry_time" : 1514481538 } ]
 ```
 Send the payment on Peer 1 to Peer 2
-```
+```shell
 # route=$(cli/lightning-cli getroute <recipient_id> <amount> 1 | jq --raw-output .route -)
 # cli/lightning-cli sendpay "$route" <rhash>
 route=$(./lightning-cli getroute 02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d 10000 1 | jq --raw-output .route -)
 ./lightning-cli sendpay "$route" 6dee059d54f8c8852fcb080f3990220853bdd14a006896516db5509c80d0273c
 ```
 More details of route
-```
+```shell
 $ echo $route
 [ { "id": "02bc09758d79de380e30644df6ddfd4f4a6e56dd138217d4db866dc7aa346cfe8d", "channel": "1256481:58:0", "msatoshi": 10000, "delay": 9 } ]
 ```
