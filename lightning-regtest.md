@@ -21,7 +21,11 @@ connect=52.166.5.175:19000
 ```
 Run bitcoind and wait to sync
 ```shell
-bitcoind
+bitcoind -daemon -regtest
+```
+Mine your blocks
+```shell
+bitcoin-cli generate 50
 ```
 
 ## Run lightning daemon
@@ -54,6 +58,10 @@ Get transaction hex ( prepend option true to see tx info and number of confirms)
 # Retrieves the raw transaction <rawtx>
 $ bitcoin-cli getrawtransaction b2c3952b33e72c3a7f27e12370d60aadb34bcabec5db612729b1c296056bde4d true
 0200000001a599205f537209b484f727381fd628e0effca393a6e9ae589ce8515d7081bc14000000006a473044022010c07c0a2704369957b789aa62748211245ccf184832232208d2e92fe1211fe202200f5f7710189dd6e806f8220dfc9dc565adb0aa9461bde66675e36b70246dd084012103db305a7e6058c128aabbdc9ff0224a990b87bb172fc0503fc788b339b7e24dd7feffffff0280c3c9010000000017a914a8aed2c95248ff9aae688aa27eb6046095de772f87000c2c04000000001976a914d9680a611bb9fdd72e0e7f7cd66d606740c6221c88acbd2a0000
+```
+Mine 6 blocks
+```shell
+bitcoin-cli generate 6
 ```
 
 Add funds to current node
