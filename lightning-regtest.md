@@ -4,8 +4,8 @@ c-lightning on regtest
 My first test on lightning network project on Bitcoin regtest
 
 Based on [c-lightning](https://github.com/ElementsProject/lightning) repository.
-Bitcoin version: v0.15.1
-Lightning version: v0.5.2-2016-11-21-1477-gfdbf2f41-dirty
+* Bitcoin version: v0.15.1
+* Lightning version: v0.5.2-2016-11-21-1477-gfdbf2f41-dirty
 
 ## Run bitcoin regtest
 My regtest network connect to another regtest peernode 52.166.5.175.
